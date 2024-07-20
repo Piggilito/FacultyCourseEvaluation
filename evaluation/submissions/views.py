@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import requires_csrf_token
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q
 from .decorators import student_required, supervisor_required
 from .models import StudentSubmissionLog, StudentSubmission, Batch, Course
 from .forms import StudentSubmissionForm
@@ -23,7 +23,7 @@ def submissions_dashboard(request):
     courses_count = 0
     submissions_needed = {}
     submissions_made = {}
-    submissions_past = []
+    submissions_past = set()
 
     if hasattr(request.user, "student_profile"):
         # get all evaluation batches that have NOT ended yet (student review table)
@@ -42,9 +42,9 @@ def submissions_dashboard(request):
                     courses_count += 1
                 else:
                     submissions_made[batch_key].append(course)
-    elif hasattr(request.user, "is_instructor") or hasattr(request.user, "is_supervisor"):
+    elif hasattr(request.user, "supervisor_profile"):
+        # get all student submissions
         submissions_past = StudentSubmission.objects.all()
-
     context = {
         "courses_count": courses_count,
         "submissions_needed": submissions_needed,
@@ -77,11 +77,10 @@ def submission_student_create(request, course_id):
         "course": course,
         "form": StudentSubmissionForm(initial={"course":course_id}, url_course_id=course_id),
     }
-    # TODO: double check that student is enrolled in said course
-    
     # check student has not already submitted an evaluation for it
     log = StudentSubmissionLog.objects.filter(course=course, author=request.user.student_profile).first()
-    if log:
+    # check that student is enrolled in said course
+    if log or request.user not in course.students:
         next = request.GET.get(reverse("dashboard"))
         return HttpResponseRedirect(next)
 

@@ -107,12 +107,13 @@
       <tr class="odd:bg-white even:bg-gray-50 border-b text-gray-900 uppercase whitespace-nowrap">
         <th scope="row" class="px-6 py-4">Instructor</th>
         <th scope="row" class="px-6 py-4">Course</th>
-        <th scope="row" class="px-6 py-4">Form Link</th>
+        <th scope="row" class="px-6 py-4">Submission Link</th>
       </tr>
     </thead>
     <tbody class="text-sm divide-y divide-blue-100 font-normal text-gray-700">
       {% if submissions_past %}
       {% for sub in submissions_past %}
+        {% if sub.pk %}
         <tr class="odd:bg-white even:bg-gray-50 border-b">
           <td class="px-6 py-4">
             <div class="flex items-center gap-3">
@@ -128,6 +129,7 @@
             <a href="{% url 'submission_student_detail' pk=sub.pk %}" class="underline text-blue-800">Read review</a>
           </td>
         </tr>
+        {% endif %}
       {% endfor %}
       {% else %}
       <tr>
