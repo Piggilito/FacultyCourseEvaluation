@@ -6,7 +6,7 @@ from django.views.decorators.csrf import requires_csrf_token
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 
-from .decorators import instructor_required, student_required
+from .decorators import student_required, supervisor_required
 from .models import StudentSubmissionLog, StudentSubmission, Batch, Course
 from .forms import StudentSubmissionForm
 
@@ -55,7 +55,7 @@ def submissions_dashboard(request):
 
 
 @login_required(login_url="/login")
-@instructor_required()
+@supervisor_required()
 @require_http_methods(["GET"])
 def submission_student_detail(request, pk):
     sub = get_object_or_404(StudentSubmission, pk=pk)

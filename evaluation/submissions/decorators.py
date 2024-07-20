@@ -16,14 +16,27 @@ def student_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, log
         return actual_decorator(function)
     return actual_decorator
 
-
-def instructor_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='login'):
+def supervisor_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='login'):
     '''
-    Decorator for views that checks that the logged in user is an instructor,
+    Decorator for views that checks that the logged in user is an instructor or a supervisor,
     redirects to the login page, if necessary.
     '''
     actual_decorator = user_passes_test(
-        lambda u: u.is_instructor,
+        lambda u: u.is_supervisor,
+        login_url=login_url,
+        redirect_field_name=redirect_field_name
+    )   
+    if function:
+        return actual_decorator(function)
+    return actual_decorator
+
+def instructor_or_supervisor_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='login'):
+    '''
+    Decorator for views that checks that the logged in user is an instructor or a supervisor,
+    redirects to the login page, if necessary.
+    '''
+    actual_decorator = user_passes_test(
+        lambda u: (u.is_instructor or u.is_supervisor),
         login_url=login_url,
         redirect_field_name=redirect_field_name
     )
