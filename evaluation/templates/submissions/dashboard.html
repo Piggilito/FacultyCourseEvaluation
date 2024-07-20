@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block page_content %}
+<header class="px-5 py-4 border-b items-center mt-8">
+  <div class= "mr-2 sm:mr-3 flex justify-center items-center">
+    <img class="rounded-full p-1"
+      src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static 'image/default_profile.png' %}{% endif %}" width="100" height="100" alt="Profile Picture">
+  </div>
+  <h2 class="text-xl text-center text-[#0041a7]">{{ user.last_name }}, {{ user.first_name }}</h2>
+  {% if request.user.is_student %}
+  <p class="text-sm text-center text-[#0041a7]">Course: {{ user.student_profile.enrolled_degree }}</p>
+  <p class="text-sm text-center text-[#0041a7]">Year: {{ user.student_profile.year }}</p>
+  {% endif %}
+  {% if request.user.is_instructor %}
+  <p class="text-sm text-center text-[#0041a7]">Years Employed: {{ user.instructor_profile.years_employed }}</p>
+  {% endif %}
+  <p class="text-center my-2">
+    <span class="text-xs text-center p-2 mt-2 text-gray-900 bg-gray-200 rounded-full">
+      {% if request.user.is_student %}
+      STUDENT
+      {% elif request.user.is_instructor or request.user.is_supervisor %}
+      STAFF MEMBER
+      {% endif %}
+    </span>
+  </p>
+</header>
+<div class="mx-auto md:px-4 px-6 container flex items-center overflow-scroll b">
+  {% if user.is_student %}
+  <table class="w-full text-left rtl:text-right text-white-500"> 
+    <thead class="text-blue-600 uppercase bg-gray-50 text-md text-bold">
+      <tr class="odd:bg-white even:bg-gray-50 border-b text-gray-900 uppercase whitespace-nowrap">
+        <th scope="row" class="px-6 py-4">Instructor</th>
+        <th scope="row" class="px-6 py-4">Course</th>
+        <th scope="row" class="px-6 py-4">Status</th>
+        <th scope="row" class="px-6 py-4">Submission</th>
+      </tr>
+    </thead>
+    <tbody class="text-sm divide-y divide-blue-100 font-normal text-gray-700">
+    {% if courses_count > 0 or submissions_made.items.length > 0 %}
+    {# Pending courses submissions #}
+      {% for batch_key, courses in submissions_needed.items %}
+        {% for course in courses %}
+        <tr class="odd:bg-white even:bg-gray-50 border-b">
+          <td class="px-6 py-4">
+            <div class="flex items-center gap-3">
+              <div class="flex flex-col">
+                <p class="block antialiased font-sans leading-normal">{{ course.instructor.user.last_name }}</p>
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4">
+              <p class="uppercase">{{ course.title }} ({{ course.course_id }})</p>
+          </td>
+          <td class="px-6 py-4">
+            <div class="flex flex-col w-[120px]">
+              <div class="text-center items-center whitespace-nowrap select-none bg-red-500/20 py-1 px-2 rounded-md" style="opacity: 1;">
+                Review Needed
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4">
+              <a class="text-blue-700" href="{% url 'submission_student_create' course_id=course.id %}">Evaluate</a>
+          </td>
+        </tr>
+        {% endfor %}
+      {% endfor %}
+      {# Successfully submitted course reviews #}
+      {% for batch_key, courses in submissions_made.items %}
+        {% for course in courses %}
+        <tr class="odd:bg-white even:bg-gray-50 border-b">
+          <td class="px-6 py-4">
+            <div class="flex items-center gap-3">
+              <div class="flex flex-col">
+                <p class="block antialiased font-sans leading-normal">{{ course.instructor.user.last_name }}</p>
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4">
+              <p class="uppercase">{{ course.title }} ({{ course.course_id }})</p>
+          </td>
+          <td class="px-6 py-4">
+            <div class="flex flex-col w-[120px]">
+              <div class="text-center items-center whitespace-nowrap select-none bg-green-500/20 py-1 px-2 rounded-md" style="opacity: 1;">
+                Completed
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4"> --- </td>
+        </tr>
+        {% endfor %}
+      {% endfor %}
+      {% else %}
+      <tr>
+        <td class="p-2 whitespace-nowrap text-[#002D74]" colspan=4>
+          <span class="italic">No Evaluations are due.</span>
+        </td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+  {% elif user.is_instructor or user.is_supervisor %}
+  <table class="w-full text-left rtl:text-right text-white-500"> 
+    <thead class="text-blue-600 uppercase bg-gray-50 text-md text-bold">
+      <tr class="odd:bg-white even:bg-gray-50 border-b text-gray-900 uppercase whitespace-nowrap">
+        <th scope="row" class="px-6 py-4">Instructor</th>
+        <th scope="row" class="px-6 py-4">Course</th>
+        <th scope="row" class="px-6 py-4">Form Link</th>
+      </tr>
+    </thead>
+    <tbody class="text-sm divide-y divide-blue-100 font-normal text-gray-700">
+      {% if submissions_past %}
+      {% for sub in submissions_past %}
+        <tr class="odd:bg-white even:bg-gray-50 border-b">
+          <td class="px-6 py-4">
+            <div class="flex items-center gap-3">
+              <div class="flex flex-col">
+                <p class="block antialiased font-sans leading-normal">{{ sub.course.instructor.user.last_name }}</p>
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4">
+              <p class="uppercase">{{ sub.course.title }} ({{ sub.course.course_id }})</p>
+          </td>
+          <td class="px-6 py-4">
+            <a href="{% url 'submission_student_detail' pk=sub.pk %}" class="underline text-blue-800">Read review</a>
+          </td>
+        </tr>
+      {% endfor %}
+      {% else %}
+      <tr>
+        <td class="p-2 whitespace-nowrap text-[#002D74]" colspan=3>
+          <span class="italic">No student submissions are available to review.</span>
+        </td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock page_content %}

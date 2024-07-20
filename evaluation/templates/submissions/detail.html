@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="px-5 py-4 border-b-8 items-center mt-8">
+  <h2 class="p-4 text-base text-lg text-center text-black-200">
+    Student Evaluation of course: <span class="font-bold">{{ submission.course.title }} ({{ submission.course.course_id}})</span>
+  </h2>
+  <p class="text-center mb-2">
+    <span class="text-sm text-center px-2 py-1 text-gray-900 bg-red-300 rounded-full">Read-Only</span>
+  </p>
+  <p class="font-bold text-md text-center text-[#0041a7]">RATING SYSTEM</p>
+  <p class="text-sm text-center text-[#0041a7]"> The number rating stands for the following:</p>
+  <p class="text-md text-sm text-center text-[#0041a7]">1 = rarely 2 = once in a while 3 = sometimes 4 = most of the time 5 = almost always.</p>
+</div>
+<div class="flex flex-col p-4 mx-2">
+  <div class="-m-1.5 overflow-x-auto">
+    <div class="p-1.5 min-w-full inline-block align-middle">
+      <div class="border rounded-lg shadow overflow-hidden">
+        <table class="min-w-full divide-y-4 divide-500">
+          <thead class="bg-[#0066b2] ">
+            <tr class="divide-x-4 divide-500">
+              <th scope="col" class="px-6 py-3 text-start text-xs font-medium uppercase text-white w-4/5">Question</th>
+              <th scope="col" class="px-6 py-3 text-start text-xs font-medium uppercase text-white w-1/5">Student Rating</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700">
+            <tr>
+              <td class="px-4 py-1 whitespace-nowrap">
+                <label>Demonstrate sensitivity to students ability to attend and absorb content information.</label>
+              </td>
+              <td class="px-4 py-1 whitespace-nowrap text-end ">
+                {{ submission.rate_sensitivity }}
+              </td>
+            </tr>
+            <tr>
+              <td class="px-4 py-1 whitespace-nowrap">
+                <label>Integrates sensitivity his/her learning with those of the students in collaborative process.</label>
+              </td>
+              <td class="px-4 py-1 whitespace-nowrap text-end">
+                  {{ submission.rate_sensitivity_integration }}
+              </td>
+            </tr>
+            <tr>
+              <td class="px-4 py-1 whitespace-nowrap">
+                <label>Makes self-available to students beyond office time. </label>
+              </td>
+              <td class="px-4 py-1 whitespace-nowrap text-end">
+                  {{ submission.rate_self_available }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <hr>
+        <!-- Open-ended questions for students -->
+        <div class="p-6 sm:rounded-md text-gray-700">
+          <h3 class="text-lg font-bold pb-2">Open-ended Questions</h3>
+          <label class="block mb-4">
+            <span class="">What is one thing that your instructor does well?</span>
+          </label>
+          <input id="openended_strong" name="openended_strong" type="text"
+            class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-20 mb-3"
+            value="{{ submission.openended_strong }}" disabled />
+          <label class="block mb-6">
+            <span class="">What is one thing that you can suggest to help this instructor improve?</span>
+          </label>
+          <input id="openended_weak" name="openended_weak" type="text"
+            class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-20 mb-3"
+            value="{{ submission.openended_weak }}" disabled />
+            <label class="block mb-6">
+              <span class="">Do you want to be in this teacher again in the future subject? (for student evaluator only) Yes or NO</span>
+            </label>
+            <input id="openended_other" name="openended_other" type="text"
+              class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-20 mb-3"
+              value="{{ submission.openended_other }}" disabled />
+        </div>
+        <!-- Return button -->
+        <div class="mt-10 p-6 sm:rounded-md">
+          <div class="mb-6 text-white">
+            <a href="{% url 'dashboard' %}" class="h-8 px-4 text-white-100 bg-gray-600 rounded-lg float-right">
+              Back to Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock page_content %}

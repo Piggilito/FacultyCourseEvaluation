@@ -1,0 +1,497 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="px-5 py-4 border-b-8 items-center mt-8">
+  <h2 class="p-4 text-base text-lg text-center text-black-200">
+    You are evaluating the course: <span class="font-bold">{{ course.title }} ({{ course.course_id }})</span>
+  </h2>
+  <p class="text-md text-center text-[#0041a7] py-2">Please provide honest feedback.</p>
+  <p class="font-bold text-md text-center text-[#0041a7]">RATING SYSTEM</p>
+  <p class="text-sm text-center text-[#0041a7]"> The number rating stands for the following:</p>
+  <p class="text-md text-sm text-center text-[#0041a7]">1 = poor 2 = fair 3 = satisfactory 4 = very satisfactory 5 = outstanding.</p>
+  <p class="text-sm text-center text-[#0041a7]">Click the answer that fits with your experience of this instructor for each item.</p>
+</div>
+<div class="flex flex-col p-4 mx-2">
+  <div class="-m-1.5 overflow-x-auto">
+    <div class="p-1.5 min-w-full inline-block align-middle">
+      <div class="border rounded-lg shadow overflow-hidden">
+        <form method="POST" action="{% url 'submission_student_create' course_id=course.pk  %}">
+          {% csrf_token %}
+          <input type="hidden" name="course" value="{{course.pk}}">
+          <!-- A. Commitment Section -->
+          <table class="min-w-full divide-y-4 divide-500">
+            <thead>
+              <tr>
+                <th class="bg-[#08b0f7] px-6 py-3 text-start font-medium uppercase text-white border-2"
+                 colspan="2">A.	Commitment</th>
+              </tr>
+              <tr class="divide-x-4 divide-500">
+                <th scope="col" class="bg-[#0083E5] px-6 py-3 text-start text-xs font-medium uppercase text-white w-4/5">Questions</th>
+                <th scope="col" class="bg-[#0083E5] px-6 py-3 text-start text-xs font-medium uppercase text-white w-1/5">Choose Rating</
+              </tr>
+            </thead>
+            <tbody class="text-gray-700">
+              <tr>
+                <td class="px-4 py-1 whitespace-nowrap">
+                  <label for="{{ form.rate_commit_1.id_for_label }}">Demonstrate sensitivity to students ability to attend and absorb content information.</label>
+                  <span class="text-red-800 text-sm pb-5">
+                    {{ form.rate_commit_1.errors }}
+                  </span>
+                </td>
+                <td class="px-4 py-1 whitespace-nowrap text-end ">
+                  <select id="rate_commit_1" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_commit_1">
+                    <option value="">Choose an option</option>
+                    <option value="1">1. Poor</option>
+                    <option value="2">2. Fair</option>
+                    <option value="3">3. Satisfactory</option>
+                    <option value="4">4. Very Satisfactory</option>
+                    <option value="5">5. Outstanding</option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-4 py-1 whitespace-nowrap">
+                  <label for="{{ form.rate_commit_2.id_for_label }}">Integrates sensitivity his/her learning with those of the students in collaborative process. </label>
+                  <span class="text-red-800 text-sm pb-5">
+                    {{ form.rate_commit_2.errors }}
+                  </span>
+                </td>
+                <td class="px-4 py-1 whitespace-nowrap text-end ">
+                  <select id="rate_commit_2" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_commit_2">
+                    <option value="">Choose an option</option>
+                    <option value="1">1. Poor</option>
+                    <option value="2">2. Fair</option>
+                    <option value="3">3. Satisfactory</option>
+                    <option value="4">4. Very Satisfactory</option>
+                    <option value="5">5. Outstanding</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td class="px-4 py-1 whitespace-nowrap">
+                  <label for="{{ form.rate_commit_3.id_for_label }}">Makes self-available to students beyond office time. </label>
+                  <span class="text-red-800 text-sm pb-5">
+                    {{ form.rate_commit_3.errors }}
+                  </span>
+                </td>
+                <td class="px-4 py-1 whitespace-nowrap text-end ">
+                  <select id="rate_commit_3" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_commit_3">
+                    <option value="">Choose an option</option>
+                    <option value="1">1. Poor</option>
+                    <option value="2">2. Fair</option>
+                    <option value="3">3. Satisfactory</option>
+                    <option value="4">4. Very Satisfactory</option>
+                    <option value="5">5. Outstanding</option>
+                  </select>
+                </td>
+              </tr>
+
+              <td class="px-4 py-1 whitespace-nowrap">
+                <label for="{{ form.rate_commit_4.id_for_label }}">Regularly comes to class on time, well-groomed and well-prepared to complete assigned responsibilities. </label>
+                <span class="text-red-800 text-sm pb-5">
+                  {{ form.rate_commit_4.errors }}
+                </span>
+              </td>
+              <td class="px-4 py-1 whitespace-nowrap text-end ">
+                <select id="rate_commit_4" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_commit_4">
+                  <option value="">Choose an option</option>
+                  <option value="1">1. Poor</option>
+                  <option value="2">2. Fair</option>
+                  <option value="3">3. Satisfactory</option>
+                  <option value="4">4. Very Satisfactory</option>
+                  <option value="5">5. Outstanding</option>
+                </select>
+              </td>
+            </tr>
+
+            <td class="px-4 py-1 whitespace-nowrap">
+              <label for="{{ form.rate_commit_5.id_for_label }}">Keeps accurate records of students, performance and prompt submission of the same. </label>
+              <span class="text-red-800 text-sm pb-5">
+                {{ form.rate_commit_5.errors }}
+              </span>
+            </td>
+            <td class="px-4 py-1 whitespace-nowrap text-end ">
+              <select id="rate_commit_5" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_commit_5">
+                <option value="">Choose an option</option>
+                <option value="1">1. Poor</option>
+                <option value="2">2. Fair</option>
+                <option value="3">3. Satisfactory</option>
+                <option value="4">4. Very Satisfactory</option>
+                <option value="5">5. Outstanding</option>
+              </select>
+            </td>
+          </tr>
+
+        <!-- Section B -->
+        <thead>
+          <tr>
+            <th class="bg-[#08b0f7] px-6 py-3 text-start font-medium uppercase text-white border-2"
+             colspan="2">B. Knowledge Subject</th>
+          </tr>
+          <tr class="divide-x-4 divide-500">
+            <th scope="col" class="bg-[#0083E5] px-6 py-3 text-start text-xs font-medium uppercase text-white w-4/5">Questions</th>
+            <th scope="col" class="bg-[#0083E5] px-6 py-3 text-start text-xs font-medium uppercase text-white w-1/5">Choose Rating</
+          </tr>
+        </thead>
+        <tbody class="text-gray-700">
+          <tr>
+            <td class="px-4 py-1 whitespace-nowrap">
+              <label for="{{ form.rate_knowledge_1.id_for_label }}">Demonstrate mastery of the subject matter (explain the subject matter without relying solely on the prescribed textbook).</label>
+              <span class="text-red-800 text-sm pb-5">
+                {{ form.rate_knowledge_1.errors }}
+              </span>
+            </td>
+            <td class="px-4 py-1 whitespace-nowrap text-end ">
+              <select id="rate_knowledge_1" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_knowledge_1">
+                <option value="">Choose an option</option>
+                <option value="1">1. Poor</option>
+                <option value="2">2. Fair</option>
+                <option value="3">3. Satisfactory</option>
+                <option value="4">4. Very Satisfactory</option>
+                <option value="5">5. Outstanding</option>
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="px-4 py-1 whitespace-nowrap">
+              <label for="{{ form.rate_knowledge_2.id_for_label }}">Draws and shares information on the state-of-the-art theory and practice in his/her discipline. </label>
+              <span class="text-red-800 text-sm pb-5">
+                {{ form.rate_knowledge_2.errors }}
+              </span>
+            </td>
+            <td class="px-4 py-1 whitespace-nowrap text-end ">
+              <select id="rate_knowledge_2" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_knowledge_2">
+                <option value="">Choose an option</option>
+                <option value="1">1. Poor</option>
+                <option value="2">2. Fair</option>
+                <option value="3">3. Satisfactory</option>
+                <option value="4">4. Very Satisfactory</option>
+                <option value="5">5. Outstanding</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="px-4 py-1 whitespace-nowrap">
+              <label for="{{ form.rate_knowledge_3.id_for_label }}">Integrates of subjects to practical circumstances and learning intents/purpose of students. </label>
+              <span class="text-red-800 text-sm pb-5">
+                {{ form.rate_knowledge_3.errors }}
+              </span>
+            </td>
+            <td class="px-4 py-1 whitespace-nowrap text-end ">
+              <select id="rate_knowledge_3" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_knowledge_3">
+                <option value="">Choose an option</option>
+                <option value="1">1. Poor</option>
+                <option value="2">2. Fair</option>
+                <option value="3">3. Satisfactory</option>
+                <option value="4">4. Very Satisfactory</option>
+                <option value="5">5. Outstanding</option>
+              </select>
+            </td>
+          </tr>
+
+          <td class="px-4 py-1 whitespace-nowrap">
+            <label for="{{ form.rate_knowledge_4.id_for_label }}">Explain the relevance of present topics to the previous lessons, and relates the subject matter to relevant current issues and/or daily life activities. </label>
+            <span class="text-red-800 text-sm pb-5">
+              {{ form.rate_knowledge_4.errors }}
+            </span>
+          </td>
+          <td class="px-4 py-1 whitespace-nowrap text-end ">
+            <select id="rate_knowledge_4" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_knowledge_4">
+              <option value="">Choose an option</option>
+              <option value="1">1. Poor</option>
+              <option value="2">2. Fair</option>
+              <option value="3">3. Satisfactory</option>
+              <option value="4">4. Very Satisfactory</option>
+              <option value="5">5. Outstanding</option>
+            </select>
+          </td>
+        </tr>
+
+        <td class="px-4 py-1 whitespace-nowrap">
+          <label for="{{ form.rate_knowledge_5.id_for_label }}">Demonstrates up-to-date knowledge and/on current trends and issues of the subjects. </label>
+          <span class="text-red-800 text-sm pb-5">
+            {{ form.rate_knowledge_5.errors }}
+          </span>
+        </td>
+        <td class="px-4 py-1 whitespace-nowrap text-end ">
+          <select id="rate_knowledge_5" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_knowledge_5">
+            <option value="">Choose an option</option>
+            <option value="1">1. Poor</option>
+            <option value="2">2. Fair</option>
+            <option value="3">3. Satisfactory</option>
+            <option value="4">4. Very Satisfactory</option>
+            <option value="5">5. Outstanding</option>
+          </select>
+        </td>
+      </tr>
+        <!-- Section ends here -->
+
+                <!-- Section C -->
+                <thead>
+                  <tr>
+                    <th class="bg-[#08b0f7] px-6 py-3 text-start font-medium uppercase text-white border-2"
+                     colspan="2">C. Teaching for Independent Learning</th>
+                  </tr>
+                  <tr class="divide-x-4 divide-500">
+                    <th scope="col" class="bg-[#0083E5] px-6 py-3 text-start text-xs font-medium uppercase text-white w-4/5">Questions</th>
+                    <th scope="col" class="bg-[#0083E5] px-6 py-3 text-start text-xs font-medium uppercase text-white w-1/5">Choose Rating</
+                  </tr>
+                </thead>
+                <tbody class="text-gray-700">
+                  <tr>
+                    <td class="px-4 py-1 whitespace-nowrap">
+                      <label for="{{ form.rate_teaching_1.id_for_label }}">Creates teaching strategies that allow students to practice using concepts they need to understand (interactive discussion).</label>
+                      <span class="text-red-800 text-sm pb-5">
+                        {{ form.rate_teaching_1.errors }}
+                      </span>
+                    </td>
+                    <td class="px-4 py-1 whitespace-nowrap text-end ">
+                      <select id="rate_teaching_1" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_teaching_1">
+                        <option value="">Choose an option</option>
+                        <option value="1">1. Poor</option>
+                        <option value="2">2. Fair</option>
+                        <option value="3">3. Satisfactory</option>
+                        <option value="4">4. Very Satisfactory</option>
+                        <option value="5">5. Outstanding</option>
+                      </select>
+                    </td>
+                  </tr>
+        
+                  <tr>
+                    <td class="px-4 py-1 whitespace-nowrap">
+                      <label for="{{ form.rate_teaching_2.id_for_label }}">Enhances students self-esteem and/or gives due recognition to students performance/potentials. </label>
+                      <span class="text-red-800 text-sm pb-5">
+                        {{ form.rate_teaching_2.errors }}
+                      </span>
+                    </td>
+                    <td class="px-4 py-1 whitespace-nowrap text-end ">
+                      <select id="rate_teaching_2" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_teaching_2">
+                        <option value="">Choose an option</option>
+                        <option value="1">1. Poor</option>
+                        <option value="2">2. Fair</option>
+                        <option value="3">3. Satisfactory</option>
+                        <option value="4">4. Very Satisfactory</option>
+                        <option value="5">5. Outstanding</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-1 whitespace-nowrap">
+                      <label for="{{ form.rate_teaching_3.id_for_label }}">Allows students to create their own course with objectives and realistically defined student-professor rules and makes them accountable for their performance. </label>
+                      <span class="text-red-800 text-sm pb-5">
+                        {{ form.rate_teaching_3.errors }}
+                      </span>
+                    </td>
+                    <td class="px-4 py-1 whitespace-nowrap text-end ">
+                      <select id="rate_teaching_3" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_teaching_3">
+                        <option value="">Choose an option</option>
+                        <option value="1">1. Poor</option>
+                        <option value="2">2. Fair</option>
+                        <option value="3">3. Satisfactory</option>
+                        <option value="4">4. Very Satisfactory</option>
+                        <option value="5">5. Outstanding</option>
+                      </select>
+                    </td>
+                  </tr>
+        
+                  <td class="px-4 py-1 whitespace-nowrap">
+                    <label for="{{ form.rate_teaching_4.id_for_label }}">Allows students to think indepedently, and make  their own decisions and holding them accountable for their performance based largely on their success in executing decision. </label>
+                    <span class="text-red-800 text-sm pb-5">
+                      {{ form.rate_teaching_4.errors }}
+                    </span>
+                  </td>
+                  <td class="px-4 py-1 whitespace-nowrap text-end ">
+                    <select id="rate_teaching_4" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_teaching_4">
+                      <option value="">Choose an option</option>
+                      <option value="1">1. Poor</option>
+                      <option value="2">2. Fair</option>
+                      <option value="3">3. Satisfactory</option>
+                      <option value="4">4. Very Satisfactory</option>
+                      <option value="5">5. Outstanding</option>
+                    </select>
+                  </td>
+                </tr>
+        
+                <td class="px-4 py-1 whitespace-nowrap">
+                  <label for="{{ form.rate_teaching_5.id_for_label }}">Encourage students to learn beyond what is required and help/guide the students how to apply the concepts learned. </label>
+                  <span class="text-red-800 text-sm pb-5">
+                    {{ form.rate_teaching_5.errors }}
+                  </span>
+                </td>
+                <td class="px-4 py-1 whitespace-nowrap text-end ">
+                  <select id="rate_teaching_5" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_teaching_5">
+                    <option value="">Choose an option</option>
+                    <option value="1">1. Poor</option>
+                    <option value="2">2. Fair</option>
+                    <option value="3">3. Satisfactory</option>
+                    <option value="4">4. Very Satisfactory</option>
+                    <option value="5">5. Outstanding</option>
+                  </select>
+                </td>
+              </tr>
+                <!-- Section ends here -->
+
+                <!-- Section D -->
+                <thead>
+                  <tr>
+                    <th class="bg-[#08b0f7] px-6 py-3 text-start font-medium uppercase text-white border-2"
+                     colspan="2">D. Management of Learning   </th>
+                  </tr>
+                  <tr class="divide-x-4 divide-500">
+                    <th scope="col" class="bg-[#0083E5] px-6 py-3 text-start text-xs font-medium uppercase text-white w-4/5">Questions</th>
+                    <th scope="col" class="bg-[#0083E5] px-6 py-3 text-start text-xs font-medium uppercase text-white w-1/5">Choose Rating</
+                  </tr>
+                </thead>
+                <tbody class="text-gray-700">
+                  <tr>
+                    <td class="px-4 py-1 whitespace-nowrap">
+                      <label for="{{ form.rate_management_1.id_for_label }}">Creates opportunity for intensive and/or extensive contribute of students in the class activities (e.g. breaks glass into dyads, triads or buzz/task groups).</label>
+                      <span class="text-red-800 text-sm pb-5">
+                        {{ form.rate_management_1.errors }}
+                      </span>
+                    </td>
+                    <td class="px-4 py-1 whitespace-nowrap text-end ">
+                      <select id="rate_management_1" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_management_1">
+                        <option value="">Choose an option</option>
+                        <option value="1">1. Poor</option>
+                        <option value="2">2. Fair</option>
+                        <option value="3">3. Satisfactory</option>
+                        <option value="4">4. Very Satisfactory</option>
+                        <option value="5">5. Outstanding</option>
+                      </select>
+                    </td>
+                  </tr>
+        
+                  <tr>
+                    <td class="px-4 py-1 whitespace-nowrap">
+                      <label for="{{ form.rate_management_2.id_for_label }}">Assumes roles as facilitators, resource person, coach, insquitor, referee in drawing stduents to contribute to knowledge  and understanding of the concepts at hand. </label>
+                      <span class="text-red-800 text-sm pb-5">
+                        {{ form.rate_management_2.errors }}
+                      </span>
+                    </td>
+                    <td class="px-4 py-1 whitespace-nowrap text-end ">
+                      <select id="rate_management_2" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_management_2">
+                        <option value="">Choose an option</option>
+                        <option value="1">1. Poor</option>
+                        <option value="2">2. Fair</option>
+                        <option value="3">3. Satisfactory</option>
+                        <option value="4">4. Very Satisfactory</option>
+                        <option value="5">5. Outstanding</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-1 whitespace-nowrap">
+                      <label for="{{ form.rate_management_3.id_for_label }}">Design and implements learning condition and experience that promotes healthy exchange and/or confrontations. </label>
+                      <span class="text-red-800 text-sm pb-5">
+                        {{ form.rate_management_3.errors }}
+                      </span>
+                    </td>
+                    <td class="px-4 py-1 whitespace-nowrap text-end ">
+                      <select id="rate_management_3" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_management_3">
+                        <option value="">Choose an option</option>
+                        <option value="1">1. Poor</option>
+                        <option value="2">2. Fair</option>
+                        <option value="3">3. Satisfactory</option>
+                        <option value="4">4. Very Satisfactory</option>
+                        <option value="5">5. Outstanding</option>
+                      </select>
+                    </td>
+                  </tr>
+        
+                  <td class="px-4 py-1 whitespace-nowrap">
+                    <label for="{{ form.rate_management_4.id_for_label }}">Structures/re-structures learning and teaching-learning context to enhance attainment of collective learning objectives. </label>
+                    <span class="text-red-800 text-sm pb-5">
+                      {{ form.rate_management_4.errors }}
+                    </span>
+                  </td>
+                  <td class="px-4 py-1 whitespace-nowrap text-end ">
+                    <select id="rate_management_4" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_management_4">
+                      <option value="">Choose an option</option>
+                      <option value="1">1. Poor</option>
+                      <option value="2">2. Fair</option>
+                      <option value="3">3. Satisfactory</option>
+                      <option value="4">4. Very Satisfactory</option>
+                      <option value="5">5. Outstanding</option>
+                    </select>
+                  </td>
+                </tr>
+        
+                <td class="px-4 py-1 whitespace-nowrap">
+                  <label for="{{ form.rate_management_5.id_for_label }}">Use of instructional materials (audio/video materials, fieldtrips, film showing, computer aided instructions, etc.) to reinforce learning process. </label>
+                  <span class="text-red-800 text-sm pb-5">
+                    {{ form.rate_management_5.errors }}
+                  </span>
+                </td>
+                <td class="px-4 py-1 whitespace-nowrap text-end ">
+                  <select id="rate_management_5" class="text-sm h-8 px-1 rounded-lg float-left" name="rate_management_5">
+                    <option value="">Choose an option</option>
+                    <option value="1">1. Poor</option>
+                    <option value="2">2. Fair</option>
+                    <option value="3">3. Satisfactory</option>
+                    <option value="4">4. Very Satisfactory</option>
+                    <option value="5">5. Outstanding</option>
+                  </select>
+                </td>
+              </tr>
+                <!-- Section ends here -->
+            </tbody>
+          </table>
+          <hr>
+          <!-- Open-ended questions for students -->
+          <div class="p-6 sm:rounded-md text-gray-700">
+            <h3 class="text-lg font-bold pb-2">Remarks:</h3>
+            <!-- openended strong points -->
+            <label class="block mb-4" for="{{ form.openended_strong.id_for_label }}">
+              <span class="">What are the strong points (strong qualities) of this teacher?</span>
+            </label>
+            <span class="text-red-800 text-sm pb-5">
+              {{ form.openended_strong.errors }}
+            </span>
+            <input id="openended_strong" name="openended_strong" type="text"
+              class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-20 mb-3"
+              placeholder="My teacher is great at..."/>
+            <!-- openended weak points -->
+            <label class="block mb-6" for="{{ form.openended_weak.id_for_label }}">
+              <span class="">What are the weak points (weak qualities) of this teacher?</span>
+            </label>
+            <span class="text-red-800 text-sm pb-5">
+              {{ form.openended_weak.errors }}
+            </span>
+            <input id="openeded_weak" name="openended_weak" type="text"
+              class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-20 mb-3"
+              placeholder="One thing my teacher could improve on is..."/>
+            <!-- additional comments -->
+            <label class="block mb-4" for="{{ form.openended_other.id_for_label }}">
+              <span class="">Do you want to be in this teacher again in the future subject? (for student evaluator only) Yes or NO</span>
+            </label>
+            <span class="text-red-800 text-sm pb-5">
+              {{ form.openended_other.errors }}
+            </span>
+            <input id="openened_other" name="openended_other" type="text"
+              class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-20 mb-3"
+              placeholder=""/>
+          </div>
+
+          <!-- Submission button -->
+          <div class="mt-10 p-6 sm:rounded-md">
+            <span class="text-red-800 text-sm pb-5">
+              {{ form.course.errors }}
+              {{ form.non_field_errors }}
+            </span>
+            <div class="mb-6 text-white">
+              <button type="submit" class="ml-2 h-8 px-4 text-white-100 bg-[#0066b2] rounded-lg float-right">Submit Answers</button>
+              <a href="{% url 'dashboard' %}" class="mr-2 h-8 px-4 text-white-100 bg-red-400 rounded-lg float-right">
+                Cancel
+              </a>
+            </div>
+            <p class="text-sm text-grey-600">Thank you for taking the time to think through the items carefully and write down your thoughts honestly. </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock page_content %}
