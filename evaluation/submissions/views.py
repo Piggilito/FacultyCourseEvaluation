@@ -59,6 +59,7 @@ def submissions_dashboard(request):
 @require_http_methods(["GET"])
 def submission_student_detail(request, pk):
     sub = get_object_or_404(StudentSubmission, pk=pk)
+    # TODO: avg info of score per sub area
     context = {
         "submission": sub,
     }
@@ -80,7 +81,7 @@ def submission_student_create(request, course_id):
     # check student has not already submitted an evaluation for it
     log = StudentSubmissionLog.objects.filter(course=course, author=request.user.student_profile).first()
     # check that student is enrolled in said course
-    if log or request.user not in course.students:
+    if log or len(course.students.filter(pk=request.user.pk).all()) == 0:
         next = request.GET.get(reverse("dashboard"))
         return HttpResponseRedirect(next)
 
